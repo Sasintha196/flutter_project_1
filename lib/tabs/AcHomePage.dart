@@ -15,8 +15,7 @@ class AcHomePage extends StatefulWidget {
 }
 
 class _AcHomePageState extends State<AcHomePage> {
-// alert eke data display wimata adalawa textFormField 2ke controler mention kirima
-  //TextEditingController txtAmount = TextEditingController();
+
   TextEditingController txtDescription = TextEditingController();
   TextEditingController txtDescriptionedit = TextEditingController();
   DateTime? date1;
@@ -24,7 +23,6 @@ class _AcHomePageState extends State<AcHomePage> {
   DateTime? date3;
   DateTime? date4;
 
-// database eka ha sambandawimata adalawa mention krnne
   final Stream<QuerySnapshot> _addacStream =
       FirebaseFirestore.instance.collection("addac").snapshots();
 
@@ -42,60 +40,11 @@ class _AcHomePageState extends State<AcHomePage> {
         onPressed: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => const AddAc()));
-        }, //press karama wenna ona de {} athule liyanna
+        }, 
         child: const Icon(
             Icons.add), // floating action button eka athule tyna icon eka
       ),
-      /* drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            // child kiynne eka widget 1i, children kiynne widget kipyak plwn. eka array ekak lesa enne
-            //const DrawerHeader(
-            // child: Text('Drawer Header'),
-            // decoration: BoxDecoration(
-            //   color: Color.fromARGB(255, 245, 113, 4),
-            // ),
-            //),
-            UserAccountsDrawerHeader(
-              accountName: const Text("Sasintha Dilan"),
-              accountEmail: const Text("sasinthadilan@gmail.com"),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor:
-                    Theme.of(context).platform == TargetPlatform.iOS
-                        ? const Color.fromARGB(255, 20, 9, 177)
-                        : const Color.fromARGB(255, 70, 4, 252),
-                child: const Text(
-                  "image",
-                  style: TextStyle(fontSize: 20.0),
-                ),
-              ),
-            ),
-            ListTile(
-              title: const Text('sign-in'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: const Text('sign-out'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ), */
+ 
 
       body: SingleChildScrollView(
         padding: const EdgeInsets.only(top: 30),
@@ -107,210 +56,8 @@ class _AcHomePageState extends State<AcHomePage> {
         ),
       ),
 
-      // mehema karama expanded wechcha expansion panel hadenne
-      /* body: SingleChildScrollView(
-        padding: const EdgeInsets.only(left: 8, right: 8, top: 30),
-        // StreamBuilder kiyanne database eken data gena function eka
-        child: StreamBuilder<QuerySnapshot>(
-          stream: _addacStream,
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              //print('Tou hae an error! ${snapshot.error.toString()}');
-              return const Text('Something went wrong');
-            } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                // "center" danne display eke madin loading wena eka display krnna
-                //const Text("Loading..."), kiyala dammoth "loading.."" kiyala display wenawa
-                child: CircularProgressIndicator(),
-              );
-            }
+     
 
-            /*    //expansion panel 1k set kirimata try kirimata adalawa
-              List<bool> _isOpen;
-            return ExpansionPanelList(
-              animationDuration: const Duration(seconds: 2),
-              dividerColor: Colors.black,
-              elevation: 1,
-              expandedHeaderPadding: const EdgeInsets.all(5),
-              children: [
-                ExpansionPanel(
-                  isExpanded: _isOpen[0],
-                    canTapOnHeader: true,
-                    headerBuilder: Text("Ac 1"),
-                    body: ),
-                    ExpansionPanel(
-                  isExpanded: _isOpen[1],
-                    canTapOnHeader: true,
-                    headerBuilder: ,
-                    body: ),
-              ],
-              expansionCallback: (i, isOpen) =>
-                  setState(() => _isOpen[i] = !isOpen),
-            );  */
-          //....................................................................................................................................................
-            return ExpansionPanelList(
-              children: snapshot.data!.docs.map((DocumentSnapshot document) {
-                dynamic data = document.data();
-
-                //....................................dates display kirimedi format 1 set karaganimata adalawa.................
-                Timestamp buy = data[
-                    'date_a1']; // Timestamp(seconds=1624653319,nanoseconds=326000000)
-                DateTime buydate = buy.toDate();
-                //print(d.toString());
-                Timestamp last = data['last_modify_date_a1'];
-                DateTime lastdate = last.toDate();
-                Timestamp next = data['next_modify_date_a1'];
-                DateTime nextdate = next.toDate();
-                //....................................................................................................................
-                return ExpansionPanel(
-                  
-                    headerBuilder: (BuildContext context, bool isExpanded) {
-                      return Container(
-                        padding: const EdgeInsets.all(
-                            11.0), // hathara pattatama set wena paridi padding kirima
-                        child: Column(
-                          children: [
-                            Text(
-                              data['name_a1'].toString(),
-                              style: const TextStyle(
-                                  backgroundColor:
-                                      Color.fromARGB(66, 156, 156, 156),
-                                  wordSpacing: 7,
-                                  color: Color.fromARGB(255, 0, 0, 0)),
-                              textScaleFactor: 1.1,
-                            ),
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            Text(
-                              "Serial No : " +
-                                  data['serial_number_a1'].toString(),
-                              style: const TextStyle(
-                                  color: Color.fromARGB(169, 0, 0, 0)),
-                              textScaleFactor: 0.9,
-                            ),
-                            const SizedBox(
-                              height: 10.0,
-                            ),
-                            Text(
-                              "Buy Date : " +
-                                  DateFormat('yyyy-MM-dd KK:mm:ss a')
-                                      .format(buydate),
-                              style: const TextStyle(
-                                  wordSpacing: 6,
-                                  color: Color.fromARGB(160, 0, 0, 0)),
-                              textScaleFactor: 0.7,
-                            ),
-                            const Divider(),
-                          ],
-                        ),
-                      );
-                    },
-                    body: Container(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Column(
-                        /*  mainAxisAlignment: MainAxisAlignment
-                            .spaceBetween, */ //ekama row eke data athara ida wen kirima
-                        children: [
-                          Text(
-                            "Last Modified Date : " +
-                                DateFormat('yyyy-MM-dd KK:mm:ss a')
-                                    .format(lastdate),
-                            style: const TextStyle(
-                                backgroundColor: Colors.white10,
-                                wordSpacing: 5,
-                                color: Color.fromARGB(255, 0, 118, 253)),
-                            textScaleFactor: 0.7,
-                          ),
-                          const Divider(),
-                          Text(
-                            "Description: " + data['description_a1'].toString(),
-                            style: const TextStyle(
-                                // backgroundColor: Colors.white10,
-                                wordSpacing: 4,
-                                color: Color.fromARGB(255, 42, 85, 70)),
-                            textScaleFactor: 0.8,
-                          ),
-                          const Divider(),
-                          Text(
-                            "Next Modify Date : " +
-                                DateFormat('yyyy-MM-dd KK:mm:ss a')
-                                    .format(nextdate),
-                            style: const TextStyle(
-                                backgroundColor: Colors.white10,
-                                wordSpacing: 5,
-                                color: Color.fromARGB(255, 0, 118, 253)),
-                            textScaleFactor: 0.7,
-                          ),
-                          const Divider(),
-                          Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.edit_note),
-                                // splashColor:
-                                // const Color.fromARGB(255, 8, 219, 54),
-                                highlightColor:
-                                    const Color.fromARGB(171, 0, 255, 21),
-                                color: const Color.fromARGB(228, 219, 152, 26),
-                                onPressed: () {
-                                  String acEditId = document.id;
-                                  _showMyEditableDialog(acEditId);
-                                },
-                              ),
-                              const SizedBox(
-                                width: 115,
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.history),
-                                // splashColor:
-                                // const Color.fromARGB(255, 8, 219, 54),
-                                highlightColor:
-                                    const Color.fromARGB(171, 0, 255, 21),
-                                color: const Color.fromARGB(228, 219, 152, 26),
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const AcHistory()));
-                                },
-                              ),
-                              const SizedBox(
-                                width: 115,
-                              ),
-                              IconButton(
-                                icon: const Icon(Icons.arrow_forward),
-                                // splashColor:
-                                // const Color.fromARGB(255, 8, 219, 54),
-                                highlightColor:
-                                    const Color.fromARGB(171, 0, 255, 21),
-                                color: const Color.fromARGB(186, 10, 73, 2),
-                                onPressed: () {
-                                  String name = data['name_a1'].toString();
-                                  String acId = document
-                                      .id; //alert eken database 1 haraha labaganna targetid eka laba deema.
-                                  _showMyDialog(acId,
-                                      name); // alert ekata adala object/function name eka thama methana call krnne
-                                },
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    isExpanded: true,
-                    backgroundColor: const Color.fromARGB(242, 242, 243, 236));
-              }).toList(),
-              expansionCallback: (i, isOpen) =>
-              setState(() =>
-                  _isOpen[i] = !isOpen              
-               ),
-            );
-          },
-        ),
-      ), */
     );
   }
 
@@ -386,7 +133,7 @@ class _AcHomePageState extends State<AcHomePage> {
     return Card(
       // height: 300,
       // width: 300,
-      //height: MediaQuery.of(context).size.height, // container eke usa
+      //height: MediaQuery.of(context).size.height,
       child: StreamBuilder<QuerySnapshot>(
         stream: _addacStream,
         builder: (BuildContext contet, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -523,14 +270,14 @@ class _AcHomePageState extends State<AcHomePage> {
     );
   }
 
-// alert ekak display wena object eka. meka _HomePageState class eka athule build object ekata pitin aluth object 1k wdyata thama add krnne
+
   // ignore: unused_element
   Future<void> _showMyDialog(acId, name) async {
-    // targetId kiyala variable 1k danne alert ekedi add karana contribution data, tika koi target eke contribution eka widiyatada add wenna one kiyana eka set krnna.
+   
     return showDialog<void>(
       context: context,
       barrierDismissible:
-          false, // user must tap button! / user button eka click karnaknma alert eka ain wenne ne. meka true karoth screen eke wena thanaka touch karath alert eka ain wenwa
+          false, // user must tap button! 
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
@@ -541,7 +288,7 @@ class _AcHomePageState extends State<AcHomePage> {
                 color: Colors.green),
             textScaleFactor: 1.0,
           ),
-          // "const" kiyanne eke agayan(values) wenas wenne nathi wenna ona.
+        
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -562,7 +309,7 @@ class _AcHomePageState extends State<AcHomePage> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    //async kiyanne nawathila inna plwn jathiye object 1k kiyana eka
+                 
                     date1 = (await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
@@ -594,7 +341,7 @@ class _AcHomePageState extends State<AcHomePage> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    //async kiyanne nawathila inna plwn jathiye object 1k kiyana eka
+                  
                     date2 = (await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
@@ -613,9 +360,9 @@ class _AcHomePageState extends State<AcHomePage> {
                   child:
                       const Text('OK', style: TextStyle(color: Colors.green)),
                   onPressed: () {
-                    // "Navigator.of(context).pop();" meken krnne button 1 press krama popup alert eka nikanma ain wena eka. e kiynne nkn ignor button 1k add krnna plwn zn 1k.
+                  
                     String description = txtDescription.text;
-                    //database ekata data ekak insert karana code eka
+                  
                     FirebaseFirestore.instance
                         .collection("repairac") //"contributions"
                         .add({
@@ -626,8 +373,7 @@ class _AcHomePageState extends State<AcHomePage> {
                       'ac_id': acId,
                     });
 
-                    //database eke data update karana code kotasak
-                    // mehidi "targets" table eke "contribution_tota" kiyana document eka thama update krnne.
+                 
                     FirebaseFirestore.instance
                         .collection('addac')
                         .doc(acId)
@@ -636,16 +382,14 @@ class _AcHomePageState extends State<AcHomePage> {
                       'description_a1': description,
                       'next_modify_date_a1': date2,
 
-                      //mehidi tiyana contribution total value ekatama aluth contribution eka ekathu wela update wenna ona nisai "FieldValue.increment()" use krnne.
-                      // delete krnna onenm "FieldValue.delete()" wage wenas kra kra update kirim krnna plwn
                     });
                     date1 = null;
                     txtDescription.text = "";
-                    // txtAmount.clear(); use krnnath plwn
+                    // txtAmount.clear();
                     date2 = null;
                     //txtNote.clear(); use krnnath plwn
                     Navigator.of(context)
-                        .pop(); // popup eka remove krnwa display eken
+                        .pop();
                   },
                 ),
                 TextButton(
@@ -670,17 +414,17 @@ class _AcHomePageState extends State<AcHomePage> {
 
   //...........................................................................................................
   Future<void> _showMyEditableDialog(acEditId) async {
-    // targetId kiyala variable 1k danne alert ekedi add karana contribution data, tika koi target eke contribution eka widiyatada add wenna one kiyana eka set krnna.
+  
     return showDialog<void>(
       context: context,
       barrierDismissible:
-          false, // user must tap button! / user button eka click karnaknma alert eka ain wenne ne. meka true karoth screen eke wena thanaka touch karath alert eka ain wenwa
+          false, // user must tap button! 
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text(
             'Update Repairing Details',
             style: TextStyle(color: Colors.amber),
-          ), // "const" kiyanne eke agayan(values) wenas wenne nathi wenna ona.
+          ), 
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -693,7 +437,7 @@ class _AcHomePageState extends State<AcHomePage> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    //async kiyanne nawathila inna plwn jathiye object 1k kiyana eka
+                   
                     date3 = (await showDatePicker(
                         context: context,
                         initialDate: DateTime.now(),
@@ -745,11 +489,9 @@ class _AcHomePageState extends State<AcHomePage> {
                     style: TextStyle(color: Colors.green),
                   ),
                   onPressed: () {
-                    // "Navigator.of(context).pop();" meken krnne button 1 press krama popup alert eka nikanma ain wena eka. e kiynne nkn ignor button 1k add krnna plwn zn 1k.
+                  
                     String descriptionedit = txtDescriptionedit.text;
 
-                    //database eke data update karana code kotasak
-                    // mehidi "targets" table eke "contribution_tota" kiyana document eka thama update krnne.
                     FirebaseFirestore.instance
                         .collection('repairac')
                         .doc('8ZiBvtgYnJvAAnNszbKh')
@@ -758,8 +500,7 @@ class _AcHomePageState extends State<AcHomePage> {
                       'description_a': descriptionedit,
                       'next_modify_date_a': date4,
 
-                      //mehidi tiyana contribution total value ekatama aluth contribution eka ekathu wela update wenna ona nisai "FieldValue.increment()" use krnne.
-                      // delete krnna onenm "FieldValue.delete()" wage wenas kra kra update kirim krnna plwn
+   
                     });
                     FirebaseFirestore.instance
                         .collection('addac')
@@ -769,8 +510,6 @@ class _AcHomePageState extends State<AcHomePage> {
                       'description_a1': descriptionedit,
                       'next_modify_date_a1': date4,
 
-                      //mehidi tiyana contribution total value ekatama aluth contribution eka ekathu wela update wenna ona nisai "FieldValue.increment()" use krnne.
-                      // delete krnna onenm "FieldValue.delete()" wage wenas kra kra update kirim krnna plwn
                     });
                     date3 = null;
                     txtDescriptionedit.text = "";
