@@ -59,8 +59,7 @@ class Ac extends StatefulWidget {
 }
 
 class _AcState extends State<Ac> {
-// alert eke data display wimata adalawa textFormField 2ke controler mention kirima
-  //TextEditingController txtAmount = TextEditingController();
+
   TextEditingController txtCoolingSufficient = TextEditingController();
   TextEditingController txtIndoorplantcondition = TextEditingController();
   TextEditingController txtOutdoorplantcondition = TextEditingController();
