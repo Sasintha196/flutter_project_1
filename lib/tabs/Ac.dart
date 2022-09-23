@@ -78,7 +78,7 @@ class _AcState extends State<Ac> {
   DateTime date3 = DateTime.now();
   DateTime date4 = DateTime.now();
 
-// database eka ha sambandawimata adalawa mention krnne
+
   final Stream<QuerySnapshot> _addacStream = FirebaseFirestore.instance
       .collection("addac")
       .orderBy('ac_number', descending: true)
@@ -105,7 +105,7 @@ class _AcState extends State<Ac> {
               context, MaterialPageRoute(builder: (context) => const AddAc()));
         }, //press karama wenna ona de {} athule liyanna
         child: const Icon(
-            Icons.add), // floating action button eka athule tyna icon eka
+            Icons.add),
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream: _addacStream,
@@ -121,8 +121,7 @@ class _AcState extends State<Ac> {
                 child: const Center(
                   child: CircularProgressIndicator(),
                 ),
-                // "center" danne display eke madin loading wena eka display krnna
-                //const Text("Loading..."), kiyala dammoth "loading.."" kiyala display wenawa
+              
               );
             }
 
@@ -593,14 +592,14 @@ class _AcState extends State<Ac> {
     );
   }
 
-// alert ekak display wena object eka. meka _HomePageState class eka athule build object ekata pitin aluth object 1k wdyata thama add krnne
+
   // ignore: unused_element
   Future<void> _showMyDialog(ac_no, acId, room_or_area_name, model_no) async {
     // targetId kiyala variable 1k danne alert ekedi add karana contribution data, tika koi target eke contribution eka widiyatada add wenna one kiyana eka set krnna.
     return showDialog<void>(
       context: context,
       barrierDismissible:
-          false, // user must tap button! / user button eka click karnaknma alert eka ain wenne ne. meka true karoth screen eke wena thanaka touch karath alert eka ain wenwa
+          false, // user must tap button! 
       builder: (BuildContext context) {
         final hours1 = date1.hour.toString().padLeft(2, '0');
         final minutes1 = date1.minute.toString().padLeft(2, '0');
@@ -627,7 +626,7 @@ class _AcState extends State<Ac> {
                 textScaleFactor: 1.0,
               ),
             ],
-          ), // "const" kiyanne eke agayan(values) wenas wenne nathi wenna ona.
+          ), 
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -773,7 +772,7 @@ class _AcState extends State<Ac> {
                   child:
                       const Text('OK', style: TextStyle(color: Colors.green)),
                   onPressed: () {
-                    // "Navigator.of(context).pop();" meken krnne button 1 press krama popup alert eka nikanma ain wena eka. e kiynne nkn ignor button 1k add krnna plwn zn 1k.
+                    
                     String coolingsufficient = txtCoolingSufficient.text;
                     String indoorplantcondition = txtIndoorplantcondition.text;
                     String outdoorplantcondition =
@@ -1383,8 +1382,7 @@ class _AcState extends State<Ac> {
                       'condition_of_outdoor_plant_a': outdoorplantcondition,
                       'remark_or_comment_a': remarkorcomment,
 
-                      //mehidi tiyana contribution total value ekatama aluth contribution eka ekathu wela update wenna ona nisai "FieldValue.increment()" use krnne.
-                      // delete krnna onenm "FieldValue.delete()" wage wenas kra kra update kirim krnna plwn
+                     
                     });
 
                     // date1 = null;
@@ -1445,11 +1443,11 @@ class _AcState extends State<Ac> {
 
   //...........................................................................................................
   Future<void> _showMyEditableDialog(acEditId, room_or_area_name) async {
-    // targetId kiyala variable 1k danne alert ekedi add karana contribution data, tika koi target eke contribution eka widiyatada add wenna one kiyana eka set krnna.
+  
     return showDialog<void>(
       context: context,
       barrierDismissible:
-          false, // user must tap button! / user button eka click karnaknma alert eka ain wenne ne. meka true karoth screen eke wena thanaka touch karath alert eka ain wenwa
+          false, // user must tap button!
       builder: (BuildContext context) {
         final hours3 = date3.hour.toString().padLeft(2, '0');
         final minutes3 = date3.minute.toString().padLeft(2, '0');
@@ -1608,7 +1606,7 @@ class _AcState extends State<Ac> {
                     style: TextStyle(color: Colors.green),
                   ),
                   onPressed: () {
-                    // "Navigator.of(context).pop();" meken krnne button 1 press krama popup alert eka nikanma ain wena eka. e kiynne nkn ignor button 1k add krnna plwn zn 1k.
+                   
 
                     String coolingsufficientedit =
                         txtCoolingSufficientEdit.text;
@@ -1618,23 +1616,7 @@ class _AcState extends State<Ac> {
                         txtOutdoorplantconditionEdit.text;
                     String remarkorcommentedit = txtRemarkorCommentEdit.text;
 
-                    //database eke data update karana code kotasak
-                    // mehidi "targets" table eke "contribution_tota" kiyana document eka thama update krnne.
-                    /*  FirebaseFirestore.instance
-                        .collection('repairac')
-                        .doc('bZq1uxBXND60fO3aaOyU')
-                        .update({
-                      'room_or_area_name': room_or_area_name,
-                      'last_repaired_date': date1,
-                      'cooling_sufficient': coolingsufficientedit,
-                      'indoor_plant_condition': indoorplantconditionedit,
-                      'outdoor_plant_condition': outdoorplantconditionedit,
-                      'remark_or_comment': remarkorcommentedit,
-                      'next_repairing_date': date2,
-
-                      //mehidi tiyana contribution total value ekatama aluth contribution eka ekathu wela update wenna ona nisai "FieldValue.increment()" use krnne.
-                      // delete krnna onenm "FieldValue.delete()" wage wenas kra kra update kirim krnna plwn
-                    }); */
+                  
                     FirebaseFirestore.instance
                         .collection('addac')
                         .doc(acEditId)
@@ -1647,8 +1629,7 @@ class _AcState extends State<Ac> {
                       'remark_or_comment_a': remarkorcommentedit,
                       'next_repairing_date_a': date4,
 
-                      //mehidi tiyana contribution total value ekatama aluth contribution eka ekathu wela update wenna ona nisai "FieldValue.increment()" use krnne.
-                      // delete krnna onenm "FieldValue.delete()" wage wenas kra kra update kirim krnna plwn
+                    
                     });
                     //date3 = null;
                     txtCoolingSufficientEdit.clear();
@@ -1656,8 +1637,7 @@ class _AcState extends State<Ac> {
                     txtOutdoorplantconditionEdit.clear();
                     txtRemarkorCommentEdit.clear();
 
-                    //date4 = null;
-                    //txtNote.clear(); use krnnath plwn
+                 
                     Navigator.of(context)
                         .pop(); // popup eka remove krnwa display eken
                   },
